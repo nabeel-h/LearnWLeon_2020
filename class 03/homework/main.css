@@ -62,13 +62,19 @@ body {
     background-color: rgb(135, 206, 235);
 	color:white;
 	border: medium solid green;
-	margin: 1% auto;
+	margin: 3% auto;
 	max-width: 600px;
 	padding: 25px;
 }
 
 #headerSection {
 	margin: 0px auto;
+}
+
+#headerSection h1 {
+    font-size: 1.8em;
+    font-weight: bold;
+
 }
 
 #headerSection section {
@@ -81,13 +87,12 @@ body {
 #aboutUsSection {
 	margin: 20px auto;
 	position: relative;
-	display: flex;
-	flex-direction: column;
+	
 }
 
 #aboutUsSection > h2 {
-	font-size: 16px;
-	font-style: bold;
+	font-size: 1.2em;
+	font-weight: bold;
 	margin-bottom: 15px;
 }
 
@@ -96,17 +101,15 @@ body {
 }
 
 #aboutUsSection_p {
-	display: flex;
-	flex-direction: column;
+
 
 }
 
 #aboutUsSection > img {
-	max-width: 150px;
-	max-height: 200px;
-	position:absolute;
-	top:0;
-	right:0;
+	max-width: 30%;
+	max-height: 30%;
+	float: right;
+    top: 0;
 }
 
 
@@ -121,7 +124,7 @@ body {
 
 #mainSection a:link{
     color:#4acc99;
-    font-style: bold;
+    font-weight: bold;
 }
 
 #headerSection h1{
@@ -132,6 +135,8 @@ body {
 .v1 {
     border-left: 2px solid black;	
     height:12px;
+    margin-left: 3px;
+    margin-right: 3px;
 }
 
 
