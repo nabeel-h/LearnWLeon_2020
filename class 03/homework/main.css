@@ -47,10 +47,77 @@ table {
 
 /* ACTUAL CSS */
 
+
+* {
+	-webkit-box-sizing: border-box; /* set all items to by border-box */
+	   -moz-box-sizing: border-box;
+			box-sizing: border-box;
+  }
+  
+body {
+	background-color: rgb(135, 206, 235);
+}
+
 #mainSection {
     background-color: rgb(135, 206, 235);
-    color:white
+	color:white;
+	border: medium solid green;
+	margin: 1% auto;
+	max-width: 600px;
+	padding: 25px;
 }
+
+#headerSection {
+	margin: 0px auto;
+}
+
+#headerSection section {
+	margin: 20px auto;
+	display: flex;
+	align-items: center;
+    justify-content: center;
+}
+
+#aboutUsSection {
+	margin: 20px auto;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+}
+
+#aboutUsSection > h2 {
+	font-size: 16px;
+	font-style: bold;
+	margin-bottom: 15px;
+}
+
+#aboutUsSection p {
+	margin-bottom: 15px;
+}
+
+#aboutUsSection_p {
+	display: flex;
+	flex-direction: column;
+
+}
+
+#aboutUsSection > img {
+	max-width: 150px;
+	max-height: 200px;
+	position:absolute;
+	top:0;
+	right:0;
+}
+
+
+
+#footerSection {
+	margin: 20px auto;
+	display: flex;
+	align-items: center;
+    justify-content: center;
+}
+
 
 #mainSection a:link{
     color:#4acc99;
@@ -61,7 +128,11 @@ table {
     font-style: italic;
 }
 
+/* horizontal bars between hyperlinks */
 .v1 {
-    border-left: 2px solid black;
+    border-left: 2px solid black;	
     height:12px;
 }
+
+
+
