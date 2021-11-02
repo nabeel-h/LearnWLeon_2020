@@ -1,0 +1,50 @@
+* {
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+  }
+
+  header {
+      border: 1px solid black;
+      min-height: 100px;
+  }
+
+  footer {
+      clear: both;
+      border: 1px solid black;
+      min-height: 100px;
+  }
+
+  /* first section */
+  body > section {
+    float: left;
+    width: 20%;
+    border: 1px solid black;
+    min-height: 400px;
+}
+
+
+  /* second section */
+  body > section + section {
+    float: left;
+    width: 40%;
+    border: 1px solid black;
+    min-height: 400px;
+  }
+
+
+  /* third section */
+  body > section + section + section {
+    float: left;
+    width: 20%;
+    border: 1px solid black;
+    min-height: 400px;
+  }
+
+  /* third section */
+  body > section + section + section + section {
+    float: left;
+    width: 20%;
+    border: 1px solid black;
+    min-height: 400px;
+  }
