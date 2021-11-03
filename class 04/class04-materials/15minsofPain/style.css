@@ -22,3 +22,13 @@ footer {
     background: blue;
     clear: both;
 }
+
+
+/* Media Query to make site responsive under 600px */
+
+@media screen and (max-width:600px) {
+    .mid {
+        width:100%;
+        background-color: grey;
+    }
+}

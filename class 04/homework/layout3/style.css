@@ -4,12 +4,8 @@
             box-sizing: border-box;
   }
 
-  header {
-      border: 1px solid black;
-      min-height: 100px;
-  }
 
-  footer {
+  footer, header {
       clear: both;
       border: 1px solid black;
       min-height: 100px;
@@ -41,7 +37,7 @@
     min-height: 400px;
   }
 
-  /* third section */
+  /* fourth section */
   body > section + section + section + section {
     float: left;
     width: 20%;
