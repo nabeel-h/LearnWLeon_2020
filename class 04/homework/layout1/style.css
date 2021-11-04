@@ -4,9 +4,10 @@
             box-sizing: border-box;
   }
 
-header {
+header,footer {
     border:1px solid black;
     min-height: 200px;
+    clear:both;
 }
 
 section.firstSection section {
@@ -18,7 +19,6 @@ section.firstSection section {
 
 section.secondSection {
     clear: both;
-    
 }
 
 section.secondSection section {
@@ -28,8 +28,24 @@ section.secondSection section {
     min-height: 200px;
 }
 
-footer {
-    clear: both;
-    order: 1px solid black;
-    min-height: 200px;
+
+/* phone size device */
+@media screen and (max-width: 500px) {
+    section.firstSection section{
+        width: 100%;
+    }
+    section.secondSection section{
+        width: 100%;
+    }
 }
+
+/* tablet size device */
+@media (min-width: 501px) and (max-width: 900px) {
+    section.firstSection section{
+        width: 100%;
+    }
+}
+
+
+
+
