@@ -30,7 +30,7 @@ section.secondSection section {
 
 
 /* phone size device */
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 454px) {
     section.firstSection section{
         width: 100%;
     }
@@ -40,7 +40,7 @@ section.secondSection section {
 }
 
 /* tablet size device */
-@media (min-width: 501px) and (max-width: 900px) {
+@media (min-width: 455px) and (max-width: 900px) {
     section.firstSection section{
         width: 100%;
     }
