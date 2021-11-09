@@ -1,0 +1,173 @@
+/* Box Model Hack */
+* {
+  box-sizing: border-box;
+}
+
+/* Clear fix hack */
+.clearfix:after {
+     content: ".";
+     display: block;
+     clear: both;
+     visibility: hidden;
+     line-height: 0;
+     height: 0;
+}
+
+.clear {
+	clear: both;
+}
+
+/******************************************
+/* BASE STYLES
+/*******************************************/
+
+section * {
+  text-align: center;
+}
+
+h1, h2, h4, p {
+  margin: 0;
+}
+
+/******************************************
+/* LAYOUT
+/*******************************************/
+
+/* NAVIGATION BAR */
+nav * {
+  float:left;
+  color: white;
+  margin: 0.5%;
+}
+
+nav > img + a {
+  float: right;
+  margin: 0;
+}
+
+nav img {             /*CENTERS LOGO IMG*/
+ position: absolute;
+ left: 46.25%;
+}
+
+
+
+nav + section, nav + section > a {
+  clear: both;
+  text-align: center;
+}
+
+nav {
+  padding: 1% 3% 0 3%;
+}
+
+nav + section {
+  padding: 1% 10% 7% 10%;
+}
+
+/* WHY SECTION */
+nav + section + section {
+  padding: 7% 25%;
+}
+
+/* VISIT US SECTION */
+nav + section + section + section {
+  padding: 7% 0 21% 0;
+}
+
+nav + section + section + section > section {
+  float: left;
+  width: 40%;
+  margin: 0 5%;
+}
+
+/* VOLUNTEER SECTION */
+nav + section + section + section + section {
+  clear: both;
+  padding: 5% 20% 10% 20%;
+}
+
+nav + section + section + section + section > a {
+
+  display: block;
+}
+
+/* FOOTER SECTION */
+
+footer {
+  height: 10%;
+  padding: 3% 2% 1% 1%;
+}
+
+.socialMedia {
+  float: left;
+  margin-bottom: 2%;
+}
+
+.addressSection {
+  float: right;
+  margin-bottom: 2%;
+}
+
+.legal {
+  clear: both;
+  display: block;
+}
+
+/******************************************
+/* COMPONENTS
+/*******************************************/
+
+body {
+  background-color:rgb(8.6%,12.2%,16.5%);
+}
+
+
+/* NAVIGATION */
+nav {
+  height: 100px;
+  background-color: rgb(40%,46.3%,54.1%); 
+}
+
+nav, nav + section {
+  color: white;
+  background: rgb(40%,46.3%,54.1%);
+}
+
+
+
+
+/* WHY SECTION */
+nav + section + section {
+  background: white;
+}
+
+
+/* VISIT SECTION  */
+nav + section + section + section { 
+  background: rgb(85.9%,87.5%,88.6%);
+  height: 400px;
+}
+
+.visitSection {
+  background: rgb(85.9%,87.5%,88.6%);
+}
+
+.visitSection img {
+  max-height: 60%;
+  max-width: 60%;
+}
+
+/* VOLUNTEER SECTION */
+nav + section + section + section + section {
+  background: white;
+}
+
+/* FOOTER SECTION */
+footer {
+  background: rgb(8.6%,12.2%,16.5%);
+}
+
+footer * {
+  color: white;
+}
