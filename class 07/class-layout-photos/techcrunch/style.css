@@ -1,0 +1,48 @@
+/* Box Model Hack */
+* {
+    box-sizing: border-box;
+  }
+  
+  /* Clear fix hack */
+  .clearfix:after {
+       content: ".";
+       display: block;
+       clear: both;
+       visibility: hidden;
+       line-height: 0;
+       height: 0;
+  }
+  
+  .clear {
+      clear: both;
+  }
+  
+
+  section {
+      float: left;
+      width: 10%;
+      border: 2px solid black;
+      height: 100%;
+  }
+
+
+  section + section {
+      width: 90%;
+  }
+
+  section + section > section {
+      float: left;
+  }
+
+  section + section > section, section + section > section + section {
+    border: 2px solid black;
+    width:50%;
+    height: 60%;
+    float: left;
+}
+
+section + section > section + section + section{
+    border: 2px solid black;
+    width:100%;
+    clear: both;
+}

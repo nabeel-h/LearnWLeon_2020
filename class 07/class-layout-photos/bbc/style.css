@@ -1,0 +1,80 @@
+/* Box Model Hack */
+* {
+    box-sizing: border-box;
+  }
+  
+  /* Clear fix hack */
+  .clearfix:after {
+       content: ".";
+       display: block;
+       clear: both;
+       visibility: hidden;
+       line-height: 0;
+       height: 0;
+  }
+  
+  .clear {
+      clear: both;
+  }
+
+body {
+    width: auto;
+}
+
+
+
+nav li {
+      display: inline-block;
+  }
+
+nav input {
+    float: right;
+}
+
+
+.top {
+    clear: both;
+}
+
+.top > p {
+    display: inline-block;
+    float: left;
+}
+
+.top > p + p {
+    display: inline-block;
+    float: right;
+}
+
+#TopNews {
+    clear: both;
+}
+
+#TopNews1 {
+    float: left;
+    height: 200px;
+    width: 50%;
+    background: green;
+    border: 2px solid black;
+} 
+
+.subTopNews {
+    float: left;
+    height: 100px;
+    width: 25%;
+    background: green;
+    border: 2px solid black;
+}
+
+
+.bottomNewsSection {
+    clear: both;
+    margin-top: 20px;
+}
+
+.bottomNews {
+    width: 33.33%;
+    float: left;
+    background: green;
+    border: 2px solid black;
+}
