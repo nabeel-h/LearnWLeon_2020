@@ -21,8 +21,13 @@
 /* BASE STYLES
 /*******************************************/
 
+html {
+  font-size: 12px;
+}
+
 section * {
   text-align: center;
+  font-family: 'Open Sans', sans-serif;
 }
 
 h1, h2, h4, p {
@@ -36,18 +41,17 @@ h1, h2, h4, p {
 /* NAVIGATION BAR */
 nav * {
   float:left;
-  color: white;
-  margin: 0.5%;
 }
 
-nav > img + a {
+nav > a + a + a {
   float: right;
-  margin: 0;
 }
 
 nav img {             /*CENTERS LOGO IMG*/
  position: absolute;
- left: 46.25%;
+ left: 48%;
+ max-width: 25px;
+ max-height: 25px;
 }
 
 
@@ -88,8 +92,11 @@ nav + section + section + section + section {
 }
 
 nav + section + section + section + section > a {
-
+  max-width: 160px;
+  text-align: center;
   display: block;
+  margin: 3% auto;
+  padding: 1% 4%;
 }
 
 /* FOOTER SECTION */
@@ -129,17 +136,67 @@ nav {
   background-color: rgb(40%,46.3%,54.1%); 
 }
 
+nav * {
+  color: white;
+  margin: 0.5%;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+nav img {             /*CENTERS LOGO IMG*/
+  max-width: 25px;
+  max-height: 25px;
+ }
+
+
+nav > a + a + a {
+  margin: 0;
+  color: rgb(40%,46.3%,54.1%);
+  background-color: white;
+  padding: 0.50% 0.25%;
+  border-radius: 5px;
+}
+
+
 nav, nav + section {
   color: white;
   background: rgb(40%,46.3%,54.1%);
 }
 
+nav + section > h1 {
+  font-size: 3.5rem;
+  padding-bottom: 3%;
+  font-weight: bolder;
+}
 
+nav + section > p {
+  font-size: 1.3rem;
+  padding-bottom: 3%;
+}
 
+nav + section > a {
+  font-size: 1.3rem;
+  color: white;
+  text-decoration: none;
+}
+
+ nav + section > img {  /* VIDEO PLAYBACK BUTTON */
+  max-height: 30px;
+  max-width: 50px;
+  padding-top: 3px;
+  margin-bottom: -7px;
+
+} 
 
 /* WHY SECTION */
 nav + section + section {
   background: white;
+}
+
+nav + section + section > h2 {
+  font-size: 2rem;
+  margin-bottom: 2%;
 }
 
 
@@ -154,13 +211,45 @@ nav + section + section + section {
 }
 
 .visitSection img {
+  margin-bottom: 3%;
   max-height: 60%;
   max-width: 60%;
+}
+
+.visitSection > h4{
+  background: rgb(85.9%,87.5%,88.6%);
+  margin-bottom: 3%;
+  font-size: 1.1rem;
+}
+
+.visitSection > p {
+  margin-bottom: 8%;
+}
+
+.visitSection > a {
+  margin: 1% 2%;
+  padding: 1% 8%;
+  border: 1px solid black;
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
 }
 
 /* VOLUNTEER SECTION */
 nav + section + section + section + section {
   background: white;
+}
+
+nav + section + section + section + section > h4 {
+  margin-bottom: 3%;
+  font-size: 2rem;
+}
+
+nav + section + section + section + section > a {
+  color: black;
+  border: 1px solid black;
+  text-decoration: none;
+  font-weight: bold;
 }
 
 /* FOOTER SECTION */
@@ -170,4 +259,84 @@ footer {
 
 footer * {
   color: white;
+  text-align: unset; /*TEXT DOESNT GET RESET TO LEFT WITHOUT THIS IN FOOTER SECTION */
+}
+
+.footer-left {
+  float: left;
+  margin-bottom: 1%;
+}
+
+.socialMedia img {
+  max-width: 20px;
+  max-height: 20px;
+  margin-right: 5px;
+}
+
+.socialMedia {
+  margin-bottom: 15%;
+}
+
+.siteMap {
+  min-width: 100px;
+}
+
+.siteMap > h4, .contribute > h4 {
+  color: rgb(40%,46.3%,54.1%);
+  text-align: left;
+  padding-bottom: 2%;
+  margin-top: 10%;
+}
+
+.siteMap > a, .contribute > a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.siteMap > a + a, .contribute > a + a {
+  margin-left: 8%;
+}
+
+.footer-right {
+  float: right;
+}
+
+.addressSection > h4 {
+  font-weight: bold;
+  margin-bottom: 3%;
+}
+
+.addressSection > p {
+  color: rgb(40%,46.3%,54.1%);
+}
+
+.addressSection a {
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.legal {
+  clear: both;
+  border-top: 2px solid rgb(40%,46.3%,54.1%);
+  padding-top: 1%;
+}
+
+.legal p {
+  display: inline-block;
+}
+
+.legal img {
+  float: right;
+  max-width: 25px;
+  max-height: 25px;
+  padding-bottom: 5px;
+}
+
+
+@media (min-width: 1200px) {
+  /* VISIT SECTION  */
+nav + section + section + section { 
+  height: 600px;
+}
 }
