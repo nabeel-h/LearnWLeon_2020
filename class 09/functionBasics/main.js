@@ -12,10 +12,15 @@ function computePowers() {
 }
 
 function pow(x, n) {
+    console.log(`pow fn: x is ${x} & n is ${n}`)
     let result = x
+    x = Number(x)
+    n = Number(n)
       for (let power = 1; power < n+1; power++) {
-      result = x * x
+          console.log(`loop: ${result} * ${x} & power is ${power}`)
+      result = result * x
   }
+    console.log(`pow fn: result is ${result}`)
   return result 
 }
 
