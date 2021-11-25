@@ -30,3 +30,5 @@ function pow(x, n) {
     resultH2.innerHTML = result
   }
 
+
+
