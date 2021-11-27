@@ -16,13 +16,32 @@ When '=' is pressed the current expression is evaluated.
 */
 
 
-
+const ACButton = document.querySelector("#ACButton")
 const numButtonsArray = Array.from(document.querySelectorAll(".numButtons"))
 
+
+ACButton.addEventListener('click', deleteIOText)
+
 for (const button of numButtonsArray) {
-    button.addEventListener('click', () => console.log(button.innerHTML))
+    button.addEventListener('click', updateIOText)
 }
 
+
+function deleteIOText(e) {
+    const IOText = document.querySelector("#IOText")
+    IOText.innerHTML = ''
+}
+
+function updateIOText(e){
+    const buttonClickedValue = e.srcElement.innerHTML
+    console.log(`Button clicked: ${buttonClickedValue}`)
+    const IOText = document.querySelector("#IOText")
+    console.log(`Current value of IOText: ${IOText.innerHTML}`)
+
+    IOText.innerHTML += buttonClickedValue
+
+
+}
 
 
 class Calculations {
