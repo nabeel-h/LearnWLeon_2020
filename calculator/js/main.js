@@ -17,30 +17,74 @@ When '=' is pressed the current expression is evaluated.
 
 
 const ACButton = document.querySelector("#ACButton")
+const backSpaceButton = document.querySelector("#backSpaceButton")
 const numButtonsArray = Array.from(document.querySelectorAll(".numButtons"))
 
 
-ACButton.addEventListener('click', deleteIOText)
+backSpaceButton.addEventListener('click', backSpaceText)
+ACButton.addEventListener('click', resetIOText)
 
 for (const button of numButtonsArray) {
     button.addEventListener('click', updateIOText)
 }
 
+function backSpaceText(e) {
+    const IOText = document.querySelector("#IOText")
+    if (IOText.innerHTML.length > 0) {
+        IOText.innerHTML = IOText.innerHTML.slice(0,-1)
+    }
+}
 
-function deleteIOText(e) {
+function resetIOText(e) {
     const IOText = document.querySelector("#IOText")
     IOText.innerHTML = ''
 }
 
 function updateIOText(e){
-    const buttonClickedValue = e.srcElement.innerHTML
-    console.log(`Button clicked: ${buttonClickedValue}`)
+    // check if input makes sense
+    // 5+5 good
+    // 555+55+55 no good
+    // 5.5/6.7 good
+    // 5.5.1/6.7 no good
+    // 5.6+.9.2 no good
+
+    const clickedButtonVal = e.srcElement.innerHTML
+    console.log(`Button clicked: ${clickedButtonVal}`)
     const IOText = document.querySelector("#IOText")
     console.log(`Current value of IOText: ${IOText.innerHTML}`)
 
-    IOText.innerHTML += buttonClickedValue
+    const countOfOperators = IOText.innerHTML.replace(/[^/ || X || - || + || ^]/g, "").length
+    const countOfDecimalPoints = IOText.innerHTML.replace(/[^.]/g, "").length
 
+    // if at least 1 operator exists and current input button is an operator don't update string
+    // ensures operator cannot be entered twice
+    if ((countOfOperators === 1) && (['/', 'X', '-', '+', '^'].some(substring=>clickedButtonVal.includes(substring)))) {
+        return
+    }
 
+    // if operator exists and period already exists on second operand and user has entered another period then don't update
+    if ((countOfOperators === 1) && (['.'].some(substring=>clickedButtonVal.includes(substring)))) {
+        if (IOText.innerHTML.split(/[X,+,^,/,—]+/)[1].includes(".")) {
+            return
+        }
+    }
+    
+    // if period (.) exists then ok, but cannot allow more than 1 period on either side of the operator
+    // if period already exists and user pressed on period again, then don't add another period.
+    if ((countOfDecimalPoints === 1) && (['.'].some(substring=>clickedButtonVal.includes(substring)))) {
+        // unless an operator exists then OK to allow period for the second operand value
+        if (countOfOperators === 1) {
+            IOText.innerHTML += clickedButtonVal
+            return
+        }
+        return
+    }
+
+    // if at least 2 periods exist and user inputs another period, then don't update
+    if ((countOfDecimalPoints >= 2) && (['.'].some(substring=>clickedButtonVal.includes(substring)))) {
+        return
+    }
+    IOText.innerHTML += clickedButtonVal
 }
 
 
