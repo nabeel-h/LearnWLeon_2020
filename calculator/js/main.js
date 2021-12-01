@@ -15,79 +15,6 @@ When '=' is pressed the current expression is evaluated.
 
 */
 
-
-const ACButton = document.querySelector("#ACButton")
-const backSpaceButton = document.querySelector("#backSpaceButton")
-const numButtonsArray = Array.from(document.querySelectorAll(".numButtons"))
-
-
-backSpaceButton.addEventListener('click', backSpaceText)
-ACButton.addEventListener('click', resetIOText)
-
-for (const button of numButtonsArray) {
-    button.addEventListener('click', updateIOText)
-}
-
-function backSpaceText(e) {
-    const IOText = document.querySelector("#IOText")
-    if (IOText.innerHTML.length > 0) {
-        IOText.innerHTML = IOText.innerHTML.slice(0,-1)
-    }
-}
-
-function resetIOText(e) {
-    const IOText = document.querySelector("#IOText")
-    IOText.innerHTML = ''
-}
-
-function updateIOText(e){
-    // check if input makes sense
-    // 5+5 good
-    // 555+55+55 no good
-    // 5.5/6.7 good
-    // 5.5.1/6.7 no good
-    // 5.6+.9.2 no good
-
-    const clickedButtonVal = e.srcElement.innerHTML
-    console.log(`Button clicked: ${clickedButtonVal}`)
-    const IOText = document.querySelector("#IOText")
-    console.log(`Current value of IOText: ${IOText.innerHTML}`)
-
-    const countOfOperators = IOText.innerHTML.replace(/[^/ || X || - || + || ^]/g, "").length
-    const countOfDecimalPoints = IOText.innerHTML.replace(/[^.]/g, "").length
-
-    // if at least 1 operator exists and current input button is an operator don't update string
-    // ensures operator cannot be entered twice
-    if ((countOfOperators === 1) && (['/', 'X', '-', '+', '^'].some(substring=>clickedButtonVal.includes(substring)))) {
-        return
-    }
-
-    // if operator exists and period already exists on second operand and user has entered another period then don't update
-    if ((countOfOperators === 1) && (['.'].some(substring=>clickedButtonVal.includes(substring)))) {
-        if (IOText.innerHTML.split(/[X,+,^,/,—]+/)[1].includes(".")) {
-            return
-        }
-    }
-    
-    // if period (.) exists then ok, but cannot allow more than 1 period on either side of the operator
-    // if period already exists and user pressed on period again, then don't add another period.
-    if ((countOfDecimalPoints === 1) && (['.'].some(substring=>clickedButtonVal.includes(substring)))) {
-        // unless an operator exists then OK to allow period for the second operand value
-        if (countOfOperators === 1) {
-            IOText.innerHTML += clickedButtonVal
-            return
-        }
-        return
-    }
-
-    // if at least 2 periods exist and user inputs another period, then don't update
-    if ((countOfDecimalPoints >= 2) && (['.'].some(substring=>clickedButtonVal.includes(substring)))) {
-        return
-    }
-    IOText.innerHTML += clickedButtonVal
-}
-
-
 class Calculations {
     /*
     Set of calculations that a user inputs and executes, will compute result.
@@ -124,10 +51,10 @@ class Calculations {
             case '/':
                 resultVal = initialOperand / inputOperand
                 break;
-            case '*':
+            case 'X':
                 resultVal = initialOperand * inputOperand
                 break;
-            case '**':
+            case '^':
                 resultVal = initialOperand ** inputOperand
                 break;
             default:
@@ -217,6 +144,130 @@ class Calculations {
     }
 }
 
+const Calculator = new Calculations
+
+const ACButton = document.querySelector("#ACButton")
+const backSpaceButton = document.querySelector("#backSpaceButton")
+const numButtonsArray = Array.from(document.querySelectorAll(".numButtons"))
+const evaluateButton = document.querySelector("#evaluatteButton")
+
+
+backSpaceButton.addEventListener('click', backSpaceText)
+ACButton.addEventListener('click', resetIOText)
+evaluateButton.addEventListener('click', evaluateExpression)
+
+for (const button of numButtonsArray) {
+    button.addEventListener('click', updateIOText)
+}
+
+function evaluateExpression(e) {
+    console.log("Evaluate button pressed")
+    const IOText = document.querySelector("#IOText")
+
+    // at least 3 chars needed for an operation
+    if (IOText.innerHTML.length <3) {
+        return
+    }
+
+    // if operator not found, then cannot execute
+    const countOfOperators = IOText.innerHTML.replace(/[^/ || X || - || + || ^]/g, "").length
+    if (countOfOperators < 1) {
+        return
+    }
+    // grab operator
+    const operator = operatorReturn(IOText.innerHTML)
+
+    // only evaluate with proper input (operand operator operand)
+    // if less than 2 operands then not valid
+    const operands = IOText.innerHTML.split(/[X,+,^,/,—]+/)
+    if (operands.length < 2) {
+        return
+    }
+
+    // create new Calculation object if current one doesn't exist
+    console.log(`Evaluating valid expression!: ${operands[0]} ${operator} ${operands[1]}`)
+
+    // add to Calculation object if already exists
+    Calculator.addCalculation(Number(operands[0]), operator, Number(operands[1]))
+
+    const calculationResult = Calculator.getLatestCalculation()
+    IOText.innerHTML = calculationResult
+    
+    // output result to IOScreen
+
+    // reset Calculation object when AC clicked, reset calculation history window
+    // output history to calculation history window.
+}
+
+
+function backSpaceText(e) {
+    const IOText = document.querySelector("#IOText")
+    if (IOText.innerHTML.length > 0) {
+        IOText.innerHTML = IOText.innerHTML.slice(0,-1)
+    }
+}
+
+function resetIOText(e) {
+    const IOText = document.querySelector("#IOText")
+    IOText.innerHTML = ''
+}
+
+function updateIOText(e){
+    // check if input makes sense
+    // 5+5 good
+    // 555+55+55 no good
+    // 5.5/6.7 good
+    // 5.5.1/6.7 no good
+    // 5.6+.9.2 no good
+
+    const clickedButtonVal = e.srcElement.innerHTML
+    console.log(`Button clicked: ${clickedButtonVal}`)
+    const IOText = document.querySelector("#IOText")
+    console.log(`Current value of IOText: ${IOText.innerHTML}`)
+
+    const countOfOperators = IOText.innerHTML.replace(/[^/ || X || - || + || ^]/g, "").length
+    const countOfDecimalPoints = IOText.innerHTML.replace(/[^.]/g, "").length
+
+    // if at least 1 operator exists and current input button is an operator don't update string
+    // ensures operator cannot be entered twice
+    if ((countOfOperators === 1) && (['/', 'X', '-', '+', '^'].some(substring=>clickedButtonVal.includes(substring)))) {
+        return
+    }
+
+    // if operator exists and period already exists on second operand and user has entered another period then don't update
+    if ((countOfOperators === 1) && (['.'].some(substring=>clickedButtonVal.includes(substring)))) {
+        if (IOText.innerHTML.split(/[X,+,^,/,—]+/)[1].includes(".")) {
+            return
+        }
+    }
+    
+    // if period (.) exists then ok, but cannot allow more than 1 period on either side of the operator
+    // if period already exists and user pressed on period again, then don't add another period.
+    if ((countOfDecimalPoints === 1) && (['.'].some(substring=>clickedButtonVal.includes(substring)))) {
+        // unless an operator exists then OK to allow period for the second operand value
+        if (countOfOperators === 1) {
+            IOText.innerHTML += clickedButtonVal
+            return
+        }
+        return
+    }
+
+    // if at least 2 periods exist and user inputs another period, then don't update
+    if ((countOfDecimalPoints >= 2) && (['.'].some(substring=>clickedButtonVal.includes(substring)))) {
+        return
+    }
+    IOText.innerHTML += clickedButtonVal
+}
+
+
+// HELPER FUNCTION for returning the operator value from an expression string
+function operatorReturn(expression){
+    for (const char of expression) {
+        if (['X', '+', "-", "^", "/"].some(operator => char.includes(operator))) {
+          return char
+        }
+      }
+}
 
 // //TESTS
 // const calcObj = new Calculations
