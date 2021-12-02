@@ -70,10 +70,20 @@ section.operatorsSec button {
 }
 
 
-section.calcHistory {
+#calcHistorySection {
     border: 1px solid black;
     width: 30%;
     height: 500px;
+}
+
+.calcSpan {
+    display: block;
+    font-size: 1.5rem;
+    margin-left: 3px;
+}
+
+#backSpaceButton {
+    font-size: 0.8rem;
 }
 
 /* COMPONENTS */

@@ -1,20 +1,3 @@
-/*
-
-When buttons on .numButtons (except for =) are clicked, it needs to appear on #IOText.
-User can enter as many digits for first operand, as soon as an operator is clicked (.operands besides AC)
-then the first operand is set and next numbers entered will be considered the second operand until the '='
-evaluate button is clicked.
-When '=' is pressed the current expression is evaluated.
-    - when a calculation is entered and executed for the first time, a Calculations object will be created
-    - for a calculation to start, the first expression MUST have 2 operands and an operator
-        * need function to evaluate if entered expression makes sense for initial calculation
-    - afterwards only 1 operand and operator will be accepted, since this will be applied to
-    the last result from previous expression.
-        * need function to evaluate that current expression is not the first one and makes sense
-
-
-*/
-
 class Calculations {
     /*
     Set of calculations that a user inputs and executes, will compute result.
@@ -43,9 +26,11 @@ class Calculations {
         // checkOperator or operands??
         switch (operator) {
             case '+':
-                 resultVal = initialOperand + inputOperand
+                console.log(`${initialOperand} + ${inputOperand}`)
+                resultVal = initialOperand + inputOperand
                 break;
             case '-':
+                console.log(`${initialOperand} - ${inputOperand}`)
                 resultVal = initialOperand - inputOperand
                 break;
             case '/':
@@ -91,35 +76,19 @@ class Calculations {
         return (lastCalculatedVal ? lastCalculatedVal : NaN)
     }
 
-    addCalculation(inputOp, op, initialOp=null) {
+    addCalculation(initialOp, inputOp, op) {
         /*  
-            :   parameters are an inputOperand and operator,
-                if initialOp argument passed that means this is the first operation, 
-                otherwise grab result of the last calculation value from this.calcs (getLatestCalculation),
-                then applies to that the operand and operator and calculates result (calculateResult)
+            :   parameters are an initial operand, an input Operand and an operator,
+                inputs to method for result (calculateResult)
                 Finally updates list of all calculations so far with new calculation (updateCalculations)
         */
-
-        
-        // if less than two operands and no calculation history
-        if ((initialOp === null) && (this.calcs.length < 1)) {
-            console.log("Please enter two operands for your expression!")
-        }
-        // if less than two operands and calculation history exists
-         else if (initialOp === null) {            
-            const initialOperand = this.getLatestCalculation()
-            const resultVal = this.calculateResult(initialOperand, inputOp, op)
-            this.updateCalculations(initialOperand, inputOp, op, resultVal)
-        // if two operands exist, so initial expression
-         } else {
-            const resultVal = this.calculateResult(initialOp, inputOp, op)
-            this.updateCalculations(initialOp, inputOp, op, resultVal)
-         }
+        const resultVal = this.calculateResult(initialOp, inputOp, op)
+        this.updateCalculations(initialOp, inputOp, op, resultVal)   
     }
 
     getCalcHistory() {
         /*
-        shows all of the calculation history by iterating over items in this.calcs array
+        returns an array of strings, shows all of the calculation history by iterating over items in this.calcs array
         output each line as: initialOperand <operator> inputOperand = result
         */
        let calcHistoryStr = (this.calcs.length < 1) ? "No calculation history!" : this.calcs.map( (calc) => {
@@ -141,6 +110,10 @@ class Calculations {
         } else {
             console.log(calcHistory)
         }
+    }
+
+    resetCalculations(){
+        this.calcs = []
     }
 }
 
@@ -166,12 +139,14 @@ function evaluateExpression(e) {
 
     // at least 3 chars needed for an operation
     if (IOText.innerHTML.length <3) {
+        console.log(`Error: less than 3 chars`)
         return
     }
 
     // if operator not found, then cannot execute
-    const countOfOperators = IOText.innerHTML.replace(/[^/ || X || - || + || ^]/g, "").length
+    const countOfOperators = IOText.innerHTML.replace(/[^/ || X || -/ || + || ^]/g, "").length
     if (countOfOperators < 1) {
+        console.log(`Error: operator not found`)
         return
     }
     // grab operator
@@ -179,28 +154,37 @@ function evaluateExpression(e) {
 
     // only evaluate with proper input (operand operator operand)
     // if less than 2 operands then not valid
-    const operands = IOText.innerHTML.split(/[X,+,^,/,—]+/)
+    const operands = IOText.innerHTML.split(/[X,+,^,/,-]+/)
     if (operands.length < 2) {
+        console.log(`Error: less than two operands found.`)
         return
+    }
+
+    // if either operand is === '.' then change it to 0
+    // find better looping way to do this???
+    for (i=0; i < operands.length; i++) {
+        if (operands[i] === '.') {
+            operands[i]=0
+        }
     }
 
     // create new Calculation object if current one doesn't exist
     console.log(`Evaluating valid expression!: ${operands[0]} ${operator} ${operands[1]}`)
 
     // add to Calculation object if already exists
-    Calculator.addCalculation(Number(operands[0]), operator, Number(operands[1]))
+    Calculator.addCalculation(Number(operands[0]), Number(operands[1]), operator)
 
+    // output result to IOScreen
     const calculationResult = Calculator.getLatestCalculation()
     IOText.innerHTML = calculationResult
-    
-    // output result to IOScreen
 
-    // reset Calculation object when AC clicked, reset calculation history window
-    // output history to calculation history window.
+    // update Calculation history with newest calculation
+    updateCalculationHistory(Calculator.getCalcHistory())
 }
 
 
 function backSpaceText(e) {
+    // deletes one char at a time on IO Screen
     const IOText = document.querySelector("#IOText")
     if (IOText.innerHTML.length > 0) {
         IOText.innerHTML = IOText.innerHTML.slice(0,-1)
@@ -208,8 +192,27 @@ function backSpaceText(e) {
 }
 
 function resetIOText(e) {
+    // Resets IO Screen as well as clearing calculation history
     const IOText = document.querySelector("#IOText")
     IOText.innerHTML = ''
+    Calculator.resetCalculations()
+    // need to clear calculation history lines
+    resetCalcHistorySection()
+    console.log(`Reset Calculator & deleted calculation history`)
+}
+
+function updateCalculationHistory(calcHistoryArray) {
+    // resets calculation history then iterates over calcHistory strings and adds spans to parent section
+    resetCalcHistorySection()
+    const calcHistorySection = document.querySelector('#calcHistorySection')
+    let calcCounter = 1
+    for (const calc of calcHistoryArray) {
+        const calcSpanNode = document.createElement('span')
+        calcSpanNode.setAttribute('class', 'calcSpan')
+        calcSpanNode.innerHTML = `(${calcCounter}) ${calc}`
+        calcHistorySection.appendChild( calcSpanNode )
+        calcCounter+=1
+    }
 }
 
 function updateIOText(e){
@@ -236,7 +239,7 @@ function updateIOText(e){
 
     // if operator exists and period already exists on second operand and user has entered another period then don't update
     if ((countOfOperators === 1) && (['.'].some(substring=>clickedButtonVal.includes(substring)))) {
-        if (IOText.innerHTML.split(/[X,+,^,/,—]+/)[1].includes(".")) {
+        if (IOText.innerHTML.split(/[X,+,^,/,-]+/)[1].includes(".")) {
             return
         }
     }
@@ -269,13 +272,9 @@ function operatorReturn(expression){
       }
 }
 
-// //TESTS
-// const calcObj = new Calculations
-
-// calcObj.addCalculation(3,'*')
-// console.log(calcObj.printCalcHistory())
-
-// calcObj.addCalculation(3,'*', 3)
-// calcObj.addCalculation(3,'*')
-// calcObj.addCalculation(9,'*')
-// console.log(calcObj.printCalcHistory())
+function resetCalcHistorySection() {
+    const calcHistorySection = document.querySelector('#calcHistorySection')
+    while (calcHistorySection.firstChild) {
+        calcHistorySection.removeChild(calcHistorySection.firstChild)
+    }
+}
