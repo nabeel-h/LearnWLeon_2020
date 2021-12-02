@@ -73,6 +73,11 @@ class Calculations {
         : shows the last item in calcs array, specifically the result property.
         */
         const lastCalculatedVal = this.calcs[(this.calcs.length) - 1].result
+        // edge case for result 0 that is falsy
+        if (lastCalculatedVal === 0) {
+            return 0
+        }
+        
         return (lastCalculatedVal ? lastCalculatedVal : NaN)
     }
 
